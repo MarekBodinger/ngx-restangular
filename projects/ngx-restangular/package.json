@@ -1,6 +1,6 @@
 {
   "name": "@pedroclayman/ngx-restangular",
-  "version": "4.0.1-exp1",
+  "version": "4.0.1-exp2",
   "description": "ngx-restangular that returns a promise instead of an Observable",
   "repository": {
     "type": "git",
