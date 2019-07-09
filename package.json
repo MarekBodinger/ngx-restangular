@@ -1,12 +1,12 @@
 {
-  "name": "ngx-restangular",
+  "name": "@pedroclayman/ngx-restangular",
   "scripts": {
     "start": "ng serve",
     "build:ngx-restangular": "ng build ngx-restangular"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/2muchcoffeecom/ngx-restangular.git"
+    "url": "git+https://github.com/pedroclayman/ngx-restangular.git"
   },
   "keywords": [
     "ng2-rest",
@@ -37,9 +37,9 @@
   "author": "logvinoleg89 <logvinoleg89@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/2muchcoffeecom/ngx-restangular/issues"
+    "url": "https://github.com/pedroclayman/ngx-restangular/issues"
   },
-  "homepage": "https://github.com/2muchcoffeecom/ngx-restangular#readme",
+  "homepage": "https://github.com/pedroclayman/ngx-restangular#readme",
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.801.0",
     "@angular-devkit/build-ng-packagr": "^0.801.0",
