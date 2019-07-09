@@ -19,6 +19,7 @@ import {
   get,
   defaults,
   clone,
+  cloneDeep,
   includes
 } from 'lodash';
 
@@ -297,7 +298,7 @@ function providerConfig($http) {
 
       function addCustomOperation(elem) {
         elem[config.restangularFields.customOperation] = bind(customFunction, elem);
-        const requestMethods = {get: customFunction, delete: customFunction};
+        const requestMethods = { get: customFunction, delete: customFunction };
         each(['put', 'patch', 'post'], function (name) {
           requestMethods[name] = function (operation, element, path, params, headers) {
             return bind(customFunction, this)(operation, path, params, headers, element);
@@ -313,8 +314,8 @@ function providerConfig($http) {
         elem[config.restangularFields.doGETLIST] = elem[config.restangularFields.customGETLIST];
       }
 
-      function copyRestangularizedElement(fromElement, toElement = {}) {
-        const copiedElement = assign(toElement, fromElement);
+      function copyRestangularizedElement(element) {
+        const copiedElement = cloneDeep(element);
         return restangularizeElem(copiedElement[config.restangularFields.parentResource],
           copiedElement, copiedElement[config.restangularFields.route], true);
       }
@@ -391,16 +392,16 @@ function providerConfig($http) {
         filledArray = config.transformElem(filledArray, true, elemToPut[config.restangularFields.route], service);
 
         elemToPut.put(params, headers)
-        .subscribe(function (serverElem) {
-          const newArray = copyRestangularizedElement(__this);
-          newArray[idx] = serverElem;
-          filledArray = newArray;
-          subject.next(newArray);
-        }, function (response) {
-          subject.error(response);
-        }, function () {
-          subject.complete();
-        });
+          .subscribe(function (serverElem) {
+            const newArray = copyRestangularizedElement(__this);
+            newArray[idx] = serverElem;
+            filledArray = newArray;
+            subject.next(newArray);
+          }, function (response) {
+            subject.error(response);
+          }, function () {
+            subject.complete();
+          });
 
         return restangularizeResponse(subject, true, filledArray);
       }
@@ -492,17 +493,17 @@ function providerConfig($http) {
 
         urlHandler.resource(this, $http, request.httpConfig, request.headers, request.params, what,
           this[config.restangularFields.etag], operation)[method]()
-        .subscribe(okCallback, function error(response) {
-          if (response.status === 304 && __this[config.restangularFields.restangularCollection]) {
-            resolvePromise(subject, response, __this, filledArray);
-          } else if (every(config.errorInterceptors, function (cb: any) {
+          .subscribe(okCallback, function error(response) {
+            if (response.status === 304 && __this[config.restangularFields.restangularCollection]) {
+              resolvePromise(subject, response, __this, filledArray);
+            } else if (every(config.errorInterceptors, function (cb: any) {
 
-            return cb(response, subject, okCallback) !== false;
-          })) {
-            // triggered if no callback returns false
-            subject.error(response);
-          }
-        });
+              return cb(response, subject, okCallback) !== false;
+            })) {
+              // triggered if no callback returns false
+              subject.error(response);
+            }
+          });
 
         return restangularizeResponse(subject, true, filledArray);
       }
@@ -604,7 +605,7 @@ function providerConfig($http) {
         const isOverrideOperation = config.isOverridenMethod(operation);
         if (isOverrideOperation) {
           callOperation = 'post';
-          callHeaders = extend(callHeaders, {'X-HTTP-Method-Override': operation === 'remove' ? 'DELETE' : operation.toUpperCase()});
+          callHeaders = extend(callHeaders, { 'X-HTTP-Method-Override': operation === 'remove' ? 'DELETE' : operation.toUpperCase() });
         } else if (config.jsonp && callOperation === 'get') {
           callOperation = 'jsonp';
         }
@@ -675,10 +676,10 @@ function providerConfig($http) {
             headers: headers,
             elem: elem
           }, {
-            params: defaultParams,
-            headers: defaultHeaders,
-            elem: defaultElem
-          });
+              params: defaultParams,
+              headers: defaultHeaders,
+              elem: defaultElem
+            });
           return bindedFunction(callParams.params, callParams.headers, callParams.elem);
         };
 
