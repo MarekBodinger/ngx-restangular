@@ -1,10 +1,10 @@
 {
-  "name": "ngx-restangular",
-  "version": "4.0.1",
-  "description": "ngx-restangular",
+  "name": "@pedroclayman/ngx-restangular",
+  "version": "4.0.1-exp1",
+  "description": "ngx-restangular that returns a promise instead of an Observable",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/2muchcoffeecom/ngx-restangular.git"
+    "url": "git+https://github.com/pedroclayman/ngx-restangular.git"
   },
   "keywords": [
     "ng2-rest",
@@ -35,15 +35,15 @@
   "author": "logvinoleg89 <logvinoleg89@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/2muchcoffeecom/ngx-restangular/issues"
+    "url": "https://github.com/pedroclayman/ngx-restangular/issues"
   },
-  "homepage": "https://github.com/2muchcoffeecom/ngx-restangular#readme",
+  "homepage": "https://github.com/pedroclayman/ngx-restangular#readme",
   "peerDependencies": {
-    "@angular/core": "^7.0",
-    "@angular/common": "^7.0",
-    "@angular/platform-browser": "^7.0",
-    "core-js": "^2.5.4",
-    "rxjs": "^6.0"
+    "@angular/core": "^8.1.0",
+    "@angular/common": "^8.1.0",
+    "@angular/platform-browser": "^8.1.0",
+    "core-js": "^3.1.4",
+    "rxjs": "^6.5.2"
   },
   "dependencies": {
     "@types/lodash": "^4.14.62"
