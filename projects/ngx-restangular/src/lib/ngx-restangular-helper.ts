@@ -1,38 +1,34 @@
-import { HttpRequest, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpRequest, HttpHeaders, HttpParams } from "@angular/common/http";
 
-import { assign } from 'core-js/fn/object';
+import { assign } from "core-js/features/object";
 
 export class RestangularHelper {
-
   static createRequest(options) {
-    const requestQueryParams = RestangularHelper.createRequestQueryParams(options.params);
-    const requestHeaders = RestangularHelper.createRequestHeaders(options.headers);
+    const requestQueryParams = RestangularHelper.createRequestQueryParams(
+      options.params
+    );
+    const requestHeaders = RestangularHelper.createRequestHeaders(
+      options.headers
+    );
     const methodName = options.method.toUpperCase();
     const withCredentials = options.withCredentials || false;
 
-    let request = new HttpRequest(
-      methodName,
-      options.url,
-      options.data,
-      {
+    let request = new HttpRequest(methodName, options.url, options.data, {
+      headers: requestHeaders,
+      params: requestQueryParams,
+      responseType: options.responseType,
+      withCredentials
+    });
+
+    if (
+      ["GET", "DELETE", "HEAD", "JSONP", "OPTIONS"].indexOf(methodName) >= 0
+    ) {
+      request = new HttpRequest(methodName, options.url, {
         headers: requestHeaders,
         params: requestQueryParams,
         responseType: options.responseType,
         withCredentials
-      }
-    );
-
-    if (['GET', 'DELETE', 'HEAD', 'JSONP', 'OPTIONS'].indexOf(methodName) >= 0) {
-      request = new HttpRequest(
-        methodName,
-        options.url,
-        {
-          headers: requestHeaders,
-          params: requestQueryParams,
-          responseType: options.responseType,
-          withCredentials
-        }
-      );
+      });
     }
     return request;
   }
@@ -45,11 +41,11 @@ export class RestangularHelper {
       let value: any = requestQueryParams[key];
 
       if (Array.isArray(value)) {
-        value.forEach(function (val) {
+        value.forEach(function(val) {
           search = search.append(key, val);
         });
       } else {
-        if (typeof value === 'object') {
+        if (typeof value === "object") {
           value = JSON.stringify(value);
         }
         search = search.append(key, value);
@@ -62,7 +58,7 @@ export class RestangularHelper {
   static createRequestHeaders(headers) {
     for (const key in headers) {
       const value: any = headers[key];
-      if (typeof value === 'undefined') {
+      if (typeof value === "undefined") {
         delete headers[key];
       }
     }
